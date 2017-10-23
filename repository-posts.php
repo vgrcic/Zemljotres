@@ -6,17 +6,12 @@
 	class PostsRepository extends Repository {
 
 		public function getAll() {
-			$posts = array();
+			$posts = [];
 			$mysqli = $this -> connect();
 			$query = "select id, heading, content, sequence from posts order by sequence desc";
 			$result = $mysqli -> query($query);
 			while ($row = $result -> fetch_assoc()) {
-				$post = new Post;
-				$post -> id = $row['id'];
-				$post -> heading = $row['heading'];
-				$post -> content = $row['content'];
-				$post -> sequence = $row['sequence'];
-				$posts[] = $post;
+				$posts[] = new Post($row);
 			}
 			$result -> free();
 			return $posts;
@@ -31,12 +26,12 @@
 			$stmt -> bind_result($heading, $content, $sequence);
 			if ($stmt -> fetch()) {
 				$stmt -> close();
-				$post = new Post;
-				$post -> id = $id;
-				$post -> heading = $heading;
-				$post -> content = $content;
-				$post -> sequence = $sequence;
-				return $post;
+				return new Post([
+					'id' => $id,
+					'heading' => $heading,
+					'content' => $content,
+					'sequence' => $sequence,
+				]);
 			} return null;
 		}
 

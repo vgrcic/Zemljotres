@@ -1,11 +1,10 @@
 <?php 
 
-	class Gallery {
+	require_once 'model.php';
 
-		var $id;
-		var $name;
-		var $images = array();
-		var $count;
+	class Gallery extends Model {
+
+		protected $fillable = ['id', 'name', 'images', 'count'];
 
 	}
 

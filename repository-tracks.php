@@ -12,16 +12,16 @@
 			$stmt -> bind_param("i", $album);
 			$stmt -> execute();
 			$stmt -> bind_result($id, $name, $audio, $sequence, $lyrics, $video);
-			$tracks = array();
+			$tracks = [];
 			while ($stmt -> fetch()) {
-				$track = new Track;
-				$track -> id = $id;
-				$track -> name = $name;
-				$track -> sequence = $sequence;
-				$track -> audio = $audio;
-				$track -> lyrics = $lyrics;
-				$track -> video = $video;
-				$tracks[] = $track;
+				$tracks[] = new Track([
+					'id' => $id,
+					'name' => $name,
+					'audio' => $audio,
+					'sequence' => $sequence,
+					'lyrics' => $lyrics,
+					'video' => $video,
+				]);
 			}
 			return $tracks;
 		}

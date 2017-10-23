@@ -1,14 +1,12 @@
 <?php
 
-	class Album {
+	require_once 'model.php';
 
-		var $id;
-		var $name;
-		var $year;
-		var $photo;
-		var $tracks;
-		var $description;
-		var $info;
+	class Album extends Model {
+
+		protected $fillable = [
+			'id', 'name', 'year', 'photo', 'tracks', 'description', 'info',
+		];
 
 	}
 

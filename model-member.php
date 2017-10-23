@@ -1,14 +1,10 @@
 <?php
 
-	class Member {
+	require_once 'model.php';
+
+	class Member extends Model {
 		
-		var $id;
-		var $first;
-		var $last;
-		var $instrument;
-		var $photo;
-		var $bio;
-		var $active;
+		protected $fillable = ['id', 'first', 'last', 'instrument', 'photo', 'bio', 'active'];
 		
 	}
 

@@ -17,24 +17,9 @@
 			$mysqli = $this -> connect();
 			$result = $mysqli -> query("select id, name, year, photo, description, info from albums order by year desc");
 			while ($row = $result -> fetch_assoc()) {
-				$album = new Album;
-				$album -> id = $row['id'];
-				$album -> name = $row['name'];
-				$album -> year = $row['year'];
-				$album -> photo = $row['photo'];
-				$album -> description = $row['description'];
-				$album -> info = $row['info'];
+				$album = new Album($row);
+				$album -> tracks = $this->tracksRepository->getAllForAlbum($album->id);
 				$albums[] = $album;
-			}
-			// Assign tracks to albums
-			$tracks = $this -> tracksRepository -> getAll();
-			foreach($albums as $album) {
-				foreach($tracks as $id => $track) {
-					if ($track -> album_id === $album -> id) {
-						$album -> tracks[] = $track;
-						unset($tracks[$id]);
-					}
-				}
 			}
 			return $albums;
 		}
@@ -48,14 +33,15 @@
 			$stmt -> bind_result($name, $year, $photo, $description, $info);
 			if ($stmt -> fetch()) {
 				$stmt -> close();
-				$album = new Album;
-				$album -> id = $id;
-				$album -> name = $name;
-				$album -> year = $year;
-				$album -> photo = $photo;
-				$album -> description = $description;
-				$album -> info = $info;
-				$album -> tracks = $this -> tracksRepository -> getAllForAlbum($id);
+				$album = new Album([
+					'id' => $id,
+					'name' => $name,
+					'year' => $year,
+					'photo' => $photo,
+					'description' => $description,
+					'info' => $info,
+					'tracks' => $this->tracksRepository->getAllForAlbum($id),
+				]);
 				return $album;
 			} return null;
 		}

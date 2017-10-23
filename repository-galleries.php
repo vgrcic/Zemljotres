@@ -11,17 +11,12 @@
 		* @return array
 		*/
 		public function getIndex() {
-			$galleries = array();
+			$galleries = [];
 			$mysqli = $this -> connect();
-			$result = $mysqli -> query("select id, name from galleries");
+			$result = $mysqli -> query("select gallery_id as id, count(gallery_id) as count, g.name from images
+										left join galleries as g on images.gallery_id = g.id group by gallery_id");
 			while ($row = $result -> fetch_assoc()) {
-				$galleries[$row['id']] = new Gallery;
-				$galleries[$row['id']] -> id = $row['id'];
-				$galleries[$row['id']] -> name = $row['name'];
-			}
-			$result = $mysqli -> query("select gallery_id, count(gallery_id) as count from images group by gallery_id");
-			while ($row = $result -> fetch_assoc()) {
-				$galleries[$row['gallery_id']] -> count = $row['count'];
+				$galleries[] = new Gallery($row);
 			}
 			return $galleries;
 		}
@@ -33,26 +28,30 @@
 		* @return	Gallery or null
 		*/		
 		public function get($id) {
-			$gallery = new Gallery;
+			$gallery = null;
 			$mysqli = $this -> connect();
 			$stmt = $mysqli -> stmt_init();
-			$stmt -> prepare("select name from galleries where id = ?");
+			$stmt -> prepare("select g.name, count(gallery_id) as count from images
+							left join galleries as g on images.gallery_id = g.id where g.id = ?");
 			$stmt -> bind_param("i", $id);
 			$stmt -> execute();
-			$stmt -> bind_result($name);
+			$stmt -> bind_result($name, $count);
 			if ($stmt -> fetch()) {
-				$gallery -> name = $name;
+				$gallery = new Gallery([
+					'name' => $name,
+					'count' => $count,
+				]);
 			} else return null;
 			// Get the images for the gallery
 			$stmt -> prepare("select id from images where gallery_id = ?");
 			$stmt -> bind_param("i", $id);
 			$stmt -> execute();
 			$stmt -> bind_result($image);
+			$images = [];
 			while ($stmt -> fetch()) {
-				$gallery -> images[] = $image;
+				$images[] = $image;
 			}
-			// Set count attribute
-			$gallery -> count = count($gallery -> images);
+			$gallery -> images = $images;
 			return $gallery;
 		}
 

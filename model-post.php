@@ -1,11 +1,10 @@
 <?php
 
-	class Post {
+	require_once 'model.php';
+
+	class Post extends Model {
 		
-		var $id;
-		var $heading;
-		var $content;
-		var $sequence;
+		protected $fillable = ['id', 'heading', 'content', 'sequence'];
 
 	}
 

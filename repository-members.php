@@ -11,13 +11,7 @@
 			$query = "select id, first, last, bio, instrument, photo from members where active = 1 order by id asc";
 			$result = $mysqli -> query($query);
 			while ($row = $result -> fetch_assoc()) {
-				$member = new Member();
-				$member -> first = $row['first'];
-				$member -> last = $row['last'];
-				$member -> instrument = $row['instrument'];
-				$member -> photo = $row['photo'];
-				$member -> bio = $row['bio'];
-				$members[] = $member;
+				$members[] = new Member($row);
 			}
 			$result -> free();
 			return $members;

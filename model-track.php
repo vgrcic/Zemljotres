@@ -1,14 +1,10 @@
 <?php
 
-	class Track {
+	require_once 'model.php';
 
-		var $id;
-		var $name;
-		var $audio;
-		var $sequence;
-		var $album_id;
-		var $lyrics;
-		var $video;
+	class Track extends Model {
+
+		protected $fillable = ['id', 'name', 'audio', 'sequence', 'album_id', 'lyrics', 'video'];
 
 	}
 
