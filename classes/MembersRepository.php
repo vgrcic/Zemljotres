@@ -1,8 +1,5 @@
 <?php
 
-	require_once 'model-member.php';
-	require_once 'repository.php';
-
 	class MembersRepository extends Repository {
 
 		public function getAll() {

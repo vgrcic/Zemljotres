@@ -1,5 +1,10 @@
 <?php
 
+	// autoloader
+	spl_autoload_register(function($class) {
+		require_once 'classes/' . $class . '.php';
+	});
+
 	session_start();
 	$config = parse_ini_file("../config.ini");
 	if(isset($_POST['password'])) {
@@ -82,8 +87,6 @@
 
 			} else {
 			// Control panel if session is active
-
-				require_once 'repository-posts.php';
 
 				$postsRepository = new PostsRepository;
 

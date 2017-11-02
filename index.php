@@ -1,10 +1,15 @@
 <?php
+
+	// autoloader
+	spl_autoload_register(function($class) {
+		require_once 'classes/' . $class . '.php';
+	});
+
 	define ('TITLE', 'Zemljotres');
 	define ('KEYWORDS', 'Zemljotres, bend, blues, rock, Zrenjanin, Aradac');
 	define ('DESCRIPTION', 'Web prezentacija benda Zemljotres');
 
 	require_once 'templates/header.php';
-	require_once 'repository-posts.php';
 ?>
 	
 	<!-- Slideshow script -->

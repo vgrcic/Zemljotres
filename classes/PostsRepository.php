@@ -1,8 +1,5 @@
 <?php
 
-	require_once 'model-post.php';
-	require_once 'repository.php';
-
 	class PostsRepository extends Repository {
 
 		public function getAll() {

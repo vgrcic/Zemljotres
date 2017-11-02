@@ -1,8 +1,5 @@
 <?php
 
-	require_once 'model-track.php';
-	require_once 'repository.php';
-
 	class TracksRepository extends Repository {
 
 		public function getAllForAlbum($album) {

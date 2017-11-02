@@ -1,9 +1,14 @@
 <?php
+
+	// autoloader
+	spl_autoload_register(function($class) {
+		require_once 'classes/' . $class . '.php';
+	});
+
 	define ('TITLE', 'Galerija');
 	define ('KEYWORDS', 'Zemljotres, slike, galerija');
 	define ('DESCRIPTION', 'Slike benda');
 	require_once 'templates/header.php';
-	require_once 'repository-galleries.php';
 
 	$galleriesRepository = new GalleriesRepository;
 

@@ -1,8 +1,5 @@
 <?php
 
-	require_once 'model-gallery.php';
-	require_once 'repository.php';
-
 	class GalleriesRepository extends Repository {
 
 		/**

@@ -1,9 +1,13 @@
 <?php
+	
+	// autoloader
+	spl_autoload_register(function($class) {
+		require_once 'classes/' . $class . '.php';
+	});
+
 	define ('KEYWORDS', 'Zemljotres, pesme, diskografija, audio, muzika');
 	define ('DESCRIPTION', 'Diskografija benda');
 	
-	require_once 'repository-albums.php';
-
 	if (isset($_GET['album']) && !is_nan($_GET['album'])) {
 
 		$albumsRepository = new AlbumsRepository;

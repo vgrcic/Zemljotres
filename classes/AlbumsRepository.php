@@ -1,9 +1,5 @@
 <?php
 
-	require_once 'model-album.php';
-	require_once 'repository.php';
-	require_once 'repository-tracks.php';
-
 	class AlbumsRepository extends Repository {
 
 		private $tracksRepository;

@@ -1,7 +1,5 @@
 <?php
 
-	require_once 'model.php';
-
 	class Album extends Model {
 
 		protected $fillable = [

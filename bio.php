@@ -1,9 +1,14 @@
 <?php
+
+	// autoloader
+	spl_autoload_register(function($class) {
+		require_once 'classes/' . $class . '.php';
+	});
+
 	define ('TITLE', 'Biografija');
 	define ('KEYWORDS', 'Zemljotres, biografija, članovi');
 	define ('DESCRIPTION', 'Biografija benda');
 	require_once 'templates/header.php';
-	require_once 'repository-members.php';
 ?>
     	<h1>Biografija</h1>
 
