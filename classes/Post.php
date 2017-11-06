@@ -2,7 +2,9 @@
 
 	class Post extends Model {
 		
-		protected $fillable = ['id', 'heading', 'content', 'sequence'];
+		protected static $fillable = ['id', 'heading', 'content', 'sequence'];
+
+		protected static $table = 'posts';
 
 	}
 

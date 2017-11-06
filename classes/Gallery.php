@@ -2,7 +2,20 @@
 
 	class Gallery extends Model {
 
-		protected $fillable = ['id', 'name', 'images', 'count'];
+		protected static $table = 'galleries';
+
+		protected static $fillable = ['id', 'name'];
+
+		protected static $eagerLoads = ['images'];
+
+		protected static $relationships = [
+			'images' => [
+				'type' => 'hasMany',
+				'class' => 'Image',
+				'column' => 'gallery_id'],
+		];
+
+		
 
 	}
 

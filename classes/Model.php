@@ -2,8 +2,6 @@
 
 	class Model {
 
-		protected $fillable = [];
-
 		protected $attributes = [];
 
 		public function __construct($attributes = []) {
@@ -36,14 +34,37 @@
 
 		public function setAttribute($key, $value) {
 
-			if (in_array($key, $this->fillable)) {
+			if (in_array($key, static::$fillable) ||
+				in_array($key, array_keys($this->getRelationships()))) {
 				$this->attributes[$key] = $value;
 			}
 
 		}
 
 		public function getFillable() {
-			return $this->fillable;
+			return static::$fillable;
+		}
+
+		public function getTable() {
+			return static::$table;
+		}
+
+		public function getAttributes() {
+			return $this->attributes;
+		}
+
+		public function getRelationships() {
+			if (isset(static::$relationships))
+				return static::$relationships;
+			return [];
+		}
+
+		public function hasRelationships() {
+			return isset(static::$relationships);
+		}
+
+		public function getEagerLoads() {
+			return static::$eagerLoads;
 		}
 
 	}

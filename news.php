@@ -93,14 +93,16 @@
 				// ACTIONS
 
 				if (isset($_POST['heading'], $_POST['content'], $_POST['target'])) {
-					$post = new Post;
-					$post -> heading = $_POST['heading'];
-					$post -> content = preg_replace('/(\r\n|\r|\n)/', '<br/>', $_POST['content']);
 					if (is_numeric($_POST['target'])) {
-						$post -> id = $_POST['target'];
-						$postsRepository -> update($post);
+						$postsRepository -> update([
+							'heading' => $_POST['heading'],
+							'content' => preg_replace('/(\r\n|\r|\n)/', '<br/>', $_POST['content'])
+						], $_POST['target']);
 					} else {
-						$postsRepository -> store($post);
+						$postsRepository -> store([
+							'heading' => $_POST['heading'],
+							'content' => preg_replace('/(\r\n|\r|\n)/', '<br/>', $_POST['content'])
+						]);
 					}
 						
 				}
@@ -119,7 +121,7 @@
 
 
 				// Fetch posts and iterate below:
-				$posts = $postsRepository -> getAll();
+				$posts = $postsRepository -> getAll(['orderBy' => ['sequence', 'asc']]);
 				$count = $postsRepository -> count();
 
 		?>

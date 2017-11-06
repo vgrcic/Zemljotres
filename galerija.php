@@ -33,9 +33,9 @@
 			<select name="gallery">
 				<option>Odaberi galeriju:</option>
 				<?php
-					foreach ($galleriesRepository -> getIndex() as $gal) { ?>
+					foreach ($galleriesRepository -> getAll() as $gal) { ?>
 					<option value="<?php print $gal -> id ?>">
-						<?php print $gal -> name ?> (<?php print $gal -> count ?> slika)</option>
+						<?php print $gal -> name ?> (<?php print count($gal->images) ?> slika)</option>
 				<?php } ?>
 			</select>
 			<input type="submit" value="Prikaži">
@@ -64,12 +64,12 @@
 
 		<h3><?php print $gallery -> name ?></h3>
 		<div class="slider-holder">
-			<div class="slider" style="width: <?php print $gallery->count * 86 ?>px">
+			<div class="slider" style="width: <?php print count($gallery->images) * 86 ?>px">
 
 	<?php
 		foreach ($gallery -> images as $image) { ?>
-			<img onClick="gallery(<?php print $image ?>)"
-				 src="images/gallery/thumb/<?php print $image ?>.jpg"
+			<img onClick="gallery(<?php print $image->id ?>)"
+				 src="images/gallery/thumb/<?php print $image->id ?>.jpg"
 				 alt="thumbnail" tabindex="0" />
 	<?php } ?>
 	
