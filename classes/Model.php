@@ -67,6 +67,13 @@
 			return static::$eagerLoads;
 		}
 
+
+		public function insertIntoRelationshipArray($key, $value) {
+			if (!isset($this->attributes[$key]))
+				$this->attributes[$key] = array();
+			$this->attributes[$key][] = $value;
+		}
+
 	}
 
 ?>

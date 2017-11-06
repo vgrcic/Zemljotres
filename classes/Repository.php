@@ -38,24 +38,12 @@
 			}
 			$result -> free();
 			// Check if the model has any relationships that need to be eagerly loaded
+			// Includes eager loads defined both in model and in options array
 			if (static::$model::hasRelationships()) {
-				$relationships = static::$model::getRelationships();
-				// Includes eager loads defined both in model and in options array
+				$relationships = static::$model::getRelationships();				
 				foreach($this->getEagerLoads($options) as $key) {
 					$eagerLoad = $relationships[$key];
-					if ($eagerLoad['type'] == 'hasMany') {
-						// Returns indexed array of arrays and binds them to models
-						$eagerCollections = $this -> hasMany($eagerLoad, array_keys($retVal));
-						foreach ($eagerCollections as $id => $collection) {
-							$retVal[$id]->$key = $collection;
-						}
-					} else if ($eagerLoad['type'] == 'hasOne') {
-						// Returns indexed array of models and binds them to models
-						$eagerModels = $this -> hasOne($eagerLoad, array_keys($retVal));
-						foreach ($eagerModels as $id => $model) {
-							$retVal[$id]->$key = $model;
-						}
-					}
+					$this -> manageEagerLoads($eagerLoad, $retVal);
 				}
 			}
 			return $retVal;
@@ -74,25 +62,16 @@
 				$result -> free();
 				$model = new static::$model($row);
 				// Check if the model has any relationships that need to be eagerly loaded
+				// Includes eager loads defined both in model and in options array
 				if (static::$model::hasRelationships()) {
-					$relationships = static::$model::getRelationships();
-					// Includes eager loads defined both in model and in options array
+					$relationships = static::$model::getRelationships();				
 					foreach($this->getEagerLoads($options) as $key) {
 						$eagerLoad = $relationships[$key];
-						if ($eagerLoad['type'] == 'hasMany') {
-							// Returns indexed array with one array and binds it to the model
-							$eagerCollections = $this -> hasMany($eagerLoad, [$id]);
-							$model -> $key = $eagerCollections[$id];
-						} else if ($eagerLoad['type'] == 'hasOne') {
-							// Returns indexed array with one model and binds it to the model
-							$eagerModels = $this -> hasOne($eagerLoad, [$id]);
-							$model -> $key = $eagerModels[$id];
-						}
+						$this -> manageEagerLoads($eagerLoad, $model);
 					}
 				}
 				return $model;
-			}
-			return null;
+			} return null;
 		}
 
 		/**
@@ -194,43 +173,42 @@
 		}
 
 		/**
-		* Returns indexed array of arrays with relationship models
+		* Populates models in indexed array with relationship models
 		*
 		* @param array $el - eager load parameters
-		* @param array $keys - integers that are passed as where in parameter
-		* @return array
+		* @param indexed array | model $models - by reference
 		*/
-		private function hasMany(array $el, array $keys) {
-			$retVal = [];
-			$class = $el['class'];
-			$builder = new QueryBuilder($class::getTable());
-			$result = $this -> connect() -> query($builder->select(['whereIn' => [$el['column'], $keys]]));
-			while ($row = $result -> fetch_assoc()) {
-				if (!isset($retVal[$row[$el['column']]]))
-					$retVal[$row[$el['column']]] = array();
-				$retVal[$row[$el['column']]][] = new $class($row);
+		private function manageEagerLoads(array $eagerLoad, &$models) {
+			// if object is given, transform it into indexed array
+			if (!is_array($models)) {
+				$transformed = $models->id;
+				$models = [$models->id => $models];
 			}
-			$result -> free();
-			return $retVal;
-		}
 
-		/**
-		* Returns indexed array of relationship models
-		*
-		* @param array $el - eager load parameters
-		* @param array $keys - integers that are passed as where in parameter
-		* @return array
-		*/
-		private function hasOne(array $el, array $keys) {
-			$retVal = [];
-			$class = $el['class'];
+			$class = $eagerLoad['class'];
+			$column = $eagerLoad['column'];
+			$table = $class::getTable();
 			$builder = new QueryBuilder($class::getTable());
-			$result = $this -> connect() -> query($builder->select(['whereIn' => [$el['column'], $keys]]));
-			while ($row = $result -> fetch_assoc()) {
-				$retVal[$row[$el['column']]] = new $class($row);
+			$result = $this -> connect() -> query($builder->select(['whereIn' => [$column, array_keys($models)]]));
+
+			switch ($eagerLoad['type']) {
+				case 'hasMany':
+					while ($row = $result -> fetch_assoc()) {
+						$models[$row[$column]] -> insertIntoRelationshipArray($table, new $class($row));
+					} break;
+				case 'hasOne':
+					while ($row = $result -> fetch_assoc()) {
+						$models[$row[$column]] -> $table = new $class($row);
+					} break;
 			}
+			
 			$result -> free();
-			return $retVal;
+
+			// if object was given and transformed, extract original value
+			if (isset($transformed)) {
+				$models = $models[$transformed];
+			}
+
 		}
 
 	}
