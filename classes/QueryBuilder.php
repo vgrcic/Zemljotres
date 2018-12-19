@@ -23,7 +23,8 @@
 		* @return QueryBuilder
 		*/
 		public function select(array $options = []) {
-			$this -> query = 'select ' . (array_key_exists('columns', $options)? implode(',', $options['columns']) : '*') . ' from ' . $this -> table;
+			$select = array_key_exists('columns', $options) ? implode(',', $options['columns']) : '*';
+			$this -> query = 'select ' . $select . ' from ' . $this -> table;
 			unset($options['columns']);
 			$this -> handleOptions($options);
 			return $this;

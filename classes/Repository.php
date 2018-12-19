@@ -1,5 +1,10 @@
 <?php
 
+	/**
+	* Repository executes queries created by the QueryBuilder class.
+	*
+	* @author Veselin Grcic
+	*/
 	abstract class Repository {
 
 		private static $connection;
@@ -130,7 +135,7 @@
 		public function count() {
 			$mysqli = $this -> connect();
 			$result = $mysqli -> query('select count(*) as count from ' . static::$model::getTable());
-			if ($row = $result -> fetch_assoc());
+			if ($row = $result -> fetch_assoc())
 				return $row['count'];
 		}
 
@@ -191,15 +196,14 @@
 			$builder = new QueryBuilder($class::getTable());
 			$result = $this -> connect() -> query($builder->select(['whereIn' => [$column, array_keys($models)]]));
 
-			switch ($eagerLoad['type']) {
-				case 'hasMany':
-					while ($row = $result -> fetch_assoc()) {
-						$models[$row[$column]] -> insertIntoRelationshipArray($table, new $class($row));
-					} break;
-				case 'hasOne':
-					while ($row = $result -> fetch_assoc()) {
-						$models[$row[$column]] -> $table = new $class($row);
-					} break;
+			if ($eagerLoad['type'] == 'hasMany') {
+				while ($row = $result -> fetch_assoc()) {
+					$models[$row[$column]] -> insertIntoRelationshipArray($table, new $class($row));
+				}
+			} elseif ($eagerLoad['type'] == 'hasOne') {
+				while ($row = $result -> fetch_assoc()) {
+					$models[$row[$column]] -> $table = new $class($row);
+				}
 			}
 			
 			$result -> free();

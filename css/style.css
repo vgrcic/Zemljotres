@@ -1,637 +1,125 @@
-/*
-	Zemljotres web site style sheet
-	Author: Veselin Grcic
-*/
-
-/* GENERAL SETTINGS */
-
 * {
-	padding: 0px;
 	margin: 0px;
-	text-decoration: none;
-}
-
-html {
-	height: 100%;
+	padding: 0px;
 }
 
 body {
-	font-family: Verdana, Geneva, sans-serif;
-	font-size: 10pt;
-	height: 100%;
-	background-color: #333;
-	color: black;
-}
-
-h1 {
-	color: #480000;
-	font-weight: normal;
-	font-size: 24pt;
-	padding-left: 70px;
-	margin-bottom: 40px;
-	font-variant: small-caps;
+	background-color: #ffcc33;
+	color: #392613;
+	font-family: 'Verdana';
 }
 
 h2 {
-	color: #480000;
 	font-weight: normal;
-	font-style: italic;
-	font-size: 18pt;
-	margin-bottom: 20px;
+	font-size: 20pt;
 }
 
-h3 {
-	font-size: 14pt;
-	font-weight: normal;
-	color: #480000;
-	padding-bottom: 10px;
-}
-
-a {
-	color: #480000;
-}
-
-.dim {
+h6 {
 	color: #4d4d4d;
 }
 
-hr {
-	margin: 30px 0px;
+a {
+	color: #392613;
+	text-decoration: none;
 }
 
-input[type="submit"] {
-	color: white;
-	background: #669900;
-	padding: 3px 15px;
-	border: 1px solid #669900;
-	border-radius: 5px 5px 5px 5px;
-	cursor: pointer;
-	font-size: 15px;
+a:hover {
+	text-decoration: underline;
 }
-
-input[type="submit"]:hover {
-	background: #88cc00;
-	border-color: #88cc00;
-}
-
-@font-face{
-	font-family: nav-font;
-	src: url(../fonts/blzee.ttf);
-}
-
-.container {
-	margin: auto;
-	width: 800px;
-	overflow: hidden;
-}
-
-.error {
-	font-size: 11px;
-	color: red;
-}
-
-
-
-
-
-/* HEADER */
-
-header {
-	display: block;
-	width: 100%;
-	background-color: #262626;
-	position: fixed;
-	top: 0px;
-	z-index: 98;
-}
-
-	header img{
-		padding: 25px 0;
-		display: block;
-		margin: auto;
-	}
-
-
-
-
-
-/* NAVIGATION */
 
 nav {
-	text-align: center;
-	background: url("../images/line.gif") repeat-x center transparent;
-	width: 100%;
 	position: fixed;
-	top: 125px;
-	z-index: 99;
+	z-index: 100;
 }
 
-	nav .btn-holder {
-		margin: auto;
-		overflow: hidden;
-		padding: 7px 5px; /* making room for the button shadow */
-		width: 665px;
-	}
+nav img {
+	display: block;
+	margin: 40px auto 20px 40px;
+}
 
-	nav li {
-		float: left;
-		list-style-type: none;
-	}
-
-	nav a {
-		background: #262626;
-		border: 4px solid white;
-		border-radius: 15px 15px 15px 15px;
-		box-shadow:3px 3px 5px black;
-		color: white;
-		display: block;
-		font-family: "nav-font";
-		font-size: 11pt;
-		font-weight: bold;
-		margin: 0 2.5px;
-		padding-top: 6px;
-		transition: border .3s;
-			-webkit-transition: border .3s;
-			-moz-transition: border .3s;
-			-o-transition: border .3s;
-		width: 120px;
-	}
-
-	nav a:hover {
-		border-color: red;
-	}
-
-
-
-
-
-/* WRAPPER */
-
-.wrapper {
-	background: rgba(250, 250, 250, 0.6);
-	border-left: 5px solid white;
-	border-right: 5px solid white;
-	color: black;
-	height: auto;
-	margin: 0px auto -105px; /* footer height */
-	min-height: 100%;
+nav li {
+	list-style-type: none;
 	position: relative;
-	width: 800px;
-	z-index: 1;
+	transition: background-color 0.5s;
+}
+
+nav ul a {
+	transition: color 0.5s;
+	display: block;
+	width: 220px;
+	padding: 15px 0px;
+	text-align: center;
+	font-size: 13pt;
+}
+
+nav li:hover {
+	background-color: #392613;
+}
+
+nav li:hover a {
+	color: #ffcc33;
+}
+
+nav li:hover .submenu {
+	visibility: visible;
+}
+
+nav li:hover .submenu li {
+	background-color: #392613;
+}
+
+nav .submenu {
+	visibility: hidden;
+	position: absolute;
+	left: 220px;
+}
+
+nav .submenu li {
+	transition: background-color 0.5s;
+	background-color: transparent;
+}
+
+nav .submenu a {
+	text-align: left;
+	font-size: 11pt;
+	padding: 10px 20px;
+	width: 210px;
 }
 
 main {
-	display: block;
-	height: auto !important;
-	height: 100%;
-	min-height: 100%;
-	padding: 200px 0px 0px;
+	display: flex;
+	flex-direction: row;
+	margin-left: 280px;
 	position: relative;
-	z-index: 1;
+	padding-top: 50px;
 }
 
-.mirror {
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	min-height: 100%;
-	background: url("../images/bonko.gif") bottom center no-repeat #262626;
+.news {
+	margin-right: 50px;
 }
 
-
-
-
-
-/* HOME PAGE */
-
-.slideshow {
-	margin-bottom: 15px;
-}
-
-	.slideshow .frame {
-		border: 5px solid #e6e6e6;
-		border-radius: 10px 10px 10px 10px;
-		height: 500px;
-		margin: auto;
-		overflow: hidden;
-		position: relative;
-		width: 750px;
-	}
-
-	.slideshow img {
-		display: block;
-		margin: auto;
-		position:absolute;
-		transition: opacity 1.5s;
-			-webkit-transition: opacity 1.5s;
-			-moz-transition: opacity 1.5s;
-			-o-transition: opacity 1.5s;
-		top: 0px;
-	}
-
-.posts {
-	border-radius: 5px 5px 5px 5px;
-	margin-top: -20px;
-	padding: 0 40px;
-}
-
-.post {
-	border-radius: 25px 25px 25px 25px;
-	color: #75a3a3;
-	background: #333333;
-	border-radius: 20px 20px 20px 20px;
-	padding: 5px 15px;
-	margin: 8px 0;
-	vertical-align: center;
-	box-shadow: black 0px 3px 10px;
-}
-
-	.post h5 {	
-		font-size: 11pt;
-		font-weight: bold;
-		padding-bottom: 3px;
-	}
-
-	.post p {
-		color: gray;
-		font-size: 9pt;
-	}
-
-	.post a {
-		color: #a3c2c2;
-	}
-
-	.post a:hover {
-		text-decoration:underline;
-	}
-
-
-
-
-
-/* AUDIO PAGE */
-
-.albums {
-	padding: 0px 50px;
-}
-
-.album {
+.news .post {
 	margin-bottom: 30px;
-	position:relative;
-	overflow: hidden;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #392613;
+	min-width: 350px;
+	max-width: 600px;
 }
 
-	.album a {
-		text-decoration: underline;
-	}
-
-	.album .cover {
-		width: 190px;
-		float: left;
-		padding-left: 5px;
-		padding-top: 5px;
-	}
-
-	.album .cover img {
-		width: 100%;
-	}
-
-.tracks {
-	padding-left: 230px;
-	clear: right;
+.shows {
+	width: 250px;
+	min-width: 250px;
 }
 
-	.tracks li {
-		line-height: 22px;
-		font-style: italic;
-	}
-
-
-
-
-
-/* ALBUM PAGE */
-
-.album-info {
-	margin: 0px 50px;
-	overflow: hidden;
-	margin-bottom: 20px;
+.shows table {
+	margin-top: 5px;
 }
 
-	.album-info .cover {
-		width: 40%;
-		float: left;
-		overflow: hidden;
-	}
-
-	.album-info .cover img {
-		width: 100%;
-	}
-
-	.album-info .info {
-		width: 55%;
-		float: left;
-		padding: 10px 0px 10px 30px;
-	}
-
-	.album-info .info p {
-		margin-bottom: 15px;
-	}
-
-.album-tracks {
-	margin: 0px 10px 0px 50px;
-	overflow: hidden;
-	margin-bottom: 10px;
+.shows th {
+	padding: 8px 20px 8px 0px;
+	font-size: 11pt;
 }
 
-	.album-tracks .player {
-		float: left;		
-		background: #333333;
-		border-radius: 10px 10px 10px 10px;
-		overflow: hidden;
-		width: 340px;
-		box-shadow: #333333 5px 5px 10px;
-		margin-bottom: 15px;
-	}
-
-	.album-tracks .track {
-		padding: 10px 15px;
-		overflow: hidden;
-	}
-
-	.album-tracks .track img {
-		float: right;
-		cursor: pointer;
-		margin-left: 10px;
-	}
-
-	.album-tracks .track:hover {
-		background: #595959;
-		transition: background 0.3s;
-			-webkit-transition: background 0.3s;
-			-moz-transition: background 0.3s;
-			-o-transition: background 0.3s;
-	}
-
-	.album-tracks .track:hover > p {
-		color: orange;
-	}
-
-	.album-tracks audio {
-		display: none;
-	}
-
-	.album-tracks p {
-		color:#75a3a3;
-		font-size: 13px;
-		font-style: italic;
-		font-weight: bold;
-		float: left;
-	}
-
-	.album-tracks .lyrics {
-		position: relative;
-		float: left;
-		margin-left: 30px;
-		width: 360px;
-	}
-
-	.album-tracks .lyrics div {		
-		display: none;
-	}
-
-	.album-tracks .lyrics p {
-		color: black;
-		font-size: 12px;
-		font-weight: normal;
-		line-height: 20px;
-	}
-
-
-
-
-
-/* CONTACT PAGE */
-
-.contact-info {
-	padding: 0 40px;
-	margin-bottom: 60px;
-}
-
-	.contact-info th {
-		font-weight: normal;
-		text-align: left;
-		padding: 2px 10px;
-	}
-
-.contact-email {
-	padding: 2px 40px;
-}
-
-	.contact-email th {
-		font-weight: normal;
-		text-align: left;
-		padding: 5px 10px;
-		vertical-align: top;
-	}
-
-	.contact-email td {
-		padding: 2px;
-		width: 250px;
-	}
-
-	.contact-email input[type="text"],
-	.contact-email textarea {
-		border: 1px solid grey;
-		border-radius: 5px 5px 5px 5px;
-		display: block;
-		padding: 3px;
-		width: 100%;
-		background: transparent;
-	}
-
-	.contact-email input[type="text"]:hover,
-	.contact-email textarea:hover {
-		border-color: orange;
-	}
-
-	.contact-email input[type="text"]:focus,
-	.contact-email textarea:focus {
-		border-color: green;
-	}
-
-	.contact-email textarea {
-		resize: none;
-		height: 70px;
-	}
-
-
-
-
-
-/* BIOGRAPHY PAGE */
-
-.bio {
-	padding: 0px 50px;
-}
-
-	.bio > p {			
-		line-height: 20px;
-		margin-bottom: 10px;
-		text-align: justify;
-		text-indent: 40px;
-	}
-
-.members {
-	float: right;
-	margin: 10px 5px 0px 20px;
-	border-radius: 25px 25px 25px 25px;
-	color: #75a3a3;
-}
-
-	.member {
-		background: #333333;
-		overflow: hidden;
-		position: relative;
-		width: 270px;
-		padding: 10px 15px 15px 15px;
-		border-radius: 30px 30px 30px 30px;
-		height: 35px;
-		box-shadow: black 0px 3px 10px;
-		margin-bottom: 10px;
-	}
-
-	.member:hover {
-		height: auto;
-	}
-
-	.member img {
-		position: absolute;
-		top: 0px;
-		left: 0px;
-	}
-
-	.member-name,
-	.member-instrument {
-		position: relative;
-		left: 90px;
-		margin-bottom:10px;
-	}
-
-	.member-name {
-		font-size: 18px;
-		margin-bottom: 3px;
-	}
-
-	.member-bio {
-		color: grey;
-		font-size: 9pt;
-		font-style: italic;
-		margin-top: 20px;
-	}
-
-
-
-
-
-/* GALLERY PAGE */
-
-.gallery-select {
-	padding: 0px 60px 30px;
-}
-
-	.gallery-select select {
-		width: 300px;
-		margin-right: 10px;
-		border: 1px solid black;
-		background: #999999;
-		color: #480000;
-		font-size: 15px;
-	}
-
-.gallery-screen div {
-	height: 0px; /* expanded height is 465 px */
-	border: none;
-	margin: 0px auto 20px;
-	text-align: center;
-	overflow: hidden;
-	transition: height 2s;
-		-webkit-transition: height 2s;
-		-moz-transition: height 2s;
-		-o-transition: height 2s;
-		transition-timing-function: ease;
-		width: auto;
-}
-
-	.gallery-screen img {
-		height: 450px;
-		border-radius: 15px 15px 15px 15px;
-		box-shadow: 5px 5px 5px black;
-	}
-
-.gallery-slider {
-	padding: 0px 20px;
-}
-
-	.gallery-slider img {
-		display: inline-block;
-		color: transparent; /* Hiding alt tag */
-		width: 80px;
-		height: 80px;
-		float: left;
-		border-radius: 10px 10px 10px 10px;
-		border: 3px solid transparent;
-		transition: border .5s;
-			-webkit-transition: border .5s;
-			-moz-transition: border .5s;
-			-o-transition: border .5s;
-	}
-
-	.gallery-slider img:hover {
-		border: 3px solid orange;
-	}
-
-	.gallery-slider img:focus {
-		border: 3px solid lightblue;
-	}
-
-	.gallery-slider .slider-holder {
-		width: 100%;
-		overflow-x: scroll;
-		overflow-y: hidden;
-	}
-
-
-
-
-
-/* FOOTER */
-
-footer {
-	position: relative;
-	display: block;
-	background-color: #737373;
-	margin: auto;
-	padding: 10px 10px 0px 10px;
-	color: #480000;
-	bottom: 0px;
-	vertical-align: bottom;
-	z-index: 100;
-	height: 95px;
-	width: 780px;
-}
-
-	footer p {
-		line-height: 21px;
-	}
-
-	.social {
-		position: absolute;
-		bottom: 10px;
-		right: 10px;
-	}
-
-#pusher {
-	margin-top: 30px;
-	height: 105px; /* footer height */
+.members .member img {
+	border-radius: 50%;
 }

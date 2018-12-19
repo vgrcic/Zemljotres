@@ -49,7 +49,7 @@
 
 			<div class="player">
 				<audio onended="refreshButtons()">
-					<source id="source" src="audio/tako-sam-mlad.mp3" type="audio/mpeg">
+					<source id="source" src="tracks/tako-sam-mlad.mp3" type="audio/mpeg">
 				</audio>
 				<?php 
 					foreach ($album -> tracks as $track) { ?>
