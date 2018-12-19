@@ -1,0 +1,12 @@
+{
+    "name": "vgrcic/zemljotres",
+    "description": "Zemljotres website",
+    "type": "package",
+    "authors": [
+        {
+            "name": "vgrcic",
+            "email": "vgrcic@hotmail.com"
+        }
+    ],
+    "require": {}
+}
