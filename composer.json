@@ -8,5 +8,6 @@
             "email": "vgrcic@hotmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "minimum-stability": "dev"
 }
